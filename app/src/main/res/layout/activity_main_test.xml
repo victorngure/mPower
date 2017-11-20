@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.linda.mpower.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/ivLight"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+
+            android:src="@drawable/ic_bulb_off" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_connect_bt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+             android:layout_marginTop="25dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#ffffff"
+            android:padding="15dp"
+
+            android:text="Connect to Bluetooth" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="10"
+            android:progress="3" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:layout_toEndOf="@+id/ivLight"
+            android:checked="false"
+            android:switchMinWidth="56dp"
+            android:text="Bulb Off   "
+            android:textOff="OFF"
+            android:textOn="ON" />
+
+
+
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#111111"></View>
+
+
+  
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginTop="10dp"
+          android:padding="10dp"
+          >
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              >
+
+
+          <TextView
+                android:gravity="center_horizontal"
+                android:id="@+id/label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:text="Sensor Data: "
+                android:textSize="12sp"
+               android:textColor="#111111"
+                android:layout_below="@+id/imageView1"
+                android:layout_alignEnd="@+id/close" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:id="@+id/sensor_values"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:text="data"
+                android:textSize="12sp"
+                android:layout_alignTop="@+id/label"
+                android:layout_alignStart="@+id/label" />
+
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="10dp"
+              >
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:text="Timer: "
+                android:textColor="#111111"
+                android:textSize="12sp"
+                android:layout_below="@+id/imageView1"
+                android:layout_alignEnd="@+id/close" />
+
+            <TextView
+                android:gravity="center_horizontal"
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="10"
+                android:text="data"
+                android:textSize="12sp"
+               android:layout_alignTop="@+id/label"
+                android:layout_alignStart="@+id/label" />
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="10dp"
+
+              >
+
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:text="Total Energy used: "
+                    android:textColor="#111111"
+                    android:textSize="12sp"
+                    android:layout_below="@+id/imageView1"
+                    android:layout_alignEnd="@+id/close" />
+
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:id="@+id/energy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:text="data"
+                    android:textSize="12sp"
+                    android:layout_alignTop="@+id/label"
+                    android:layout_alignStart="@+id/label" />
+       
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:orientation="horizontal"
+              >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignEnd="@+id/close"
+                    android:layout_below="@+id/imageView1"
+                    android:gravity="center_horizontal"
+                    android:maxLines="10"
+                    android:text="Power Limit: "
+                    android:textColor="#111111"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:id="@+id/limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:text="not set"
+                    android:textSize="12sp"
+                    android:layout_alignTop="@+id/label"
+                    android:layout_alignStart="@+id/label" />
+              
+          </LinearLayout>
+      </LinearLayout>
+
+
+
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/linechart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+
+  ></com.github.mikephil.charting.charts.LineChart>
+
+
+</LinearLayout>

@@ -53,8 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginRight="16dp"
-            android:onClick="connectBT"
-            android:text="Connect to Bluetooth"
+           android:text="Connect to Bluetooth"
             android:layout_alignBaseline="@+id/close"
             android:layout_alignBottom="@+id/close"
             android:layout_centerHorizontal="true" />

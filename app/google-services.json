@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "545784318312",
+    "firebase_url": "https://appfest-hackathon.firebaseio.com",
+    "project_id": "appfest-hackathon",
+    "storage_bucket": "appfest-hackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:545784318312:android:8ec1b51264147eb3",
+        "android_client_info": {
+          "package_name": "com.example.linda.mpower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "545784318312-cgo1pkk5ebid1pnb5pauqq0ddpgljkk0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLtonR7yH2UTnsvJcQ_u6Yk3gO7gEzpsc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
