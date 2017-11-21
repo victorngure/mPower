@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
     Double us;
     ImageView iv_light;
     SwitchCompat switch_light;
-    Button btn_connect_bt;
+    LinearLayout ll_connect_bt;
 
 
 
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         //  dont forget to refresh the drawing
         mChart.invalidate();
 
-        btn_connect_bt.setOnClickListener(new View.OnClickListener() {
+        ll_connect_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 connectBT();
@@ -214,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
             }
         });
 
-        btn_connect_bt.setVisibility(View.GONE);
+        ll_connect_bt.setVisibility(View.GONE);
         findBT();
         try {
             openBT();
@@ -233,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         } catch (IOException e) {
             e.printStackTrace();
         }
-        View b = findViewById(R.id.btn_connect_bt);
+        View b = findViewById(R.id.ll_connect_bt);
         b.setVisibility(View.GONE);
         View c = findViewById(R.id.switch_light);
         c.setVisibility(View.VISIBLE);
@@ -300,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                 timeSwapBuff += timeInMilliseconds;
                 customHandler.removeCallbacks(updateTimerThread);
                 closeBT();
-                View c = findViewById(R.id.btn_connect_bt);
+                View c = findViewById(R.id.ll_connect_bt);
                 c.setVisibility(View.VISIBLE);
                 iv_light.setImageDrawable(getResources().getDrawable(R.drawable.ic_bulb_off));
                 switch_light.setChecked(false);
@@ -663,7 +664,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         offButton = (Button) findViewById(R.id.close);
         totalEnergy = (TextView) findViewById(R.id.energy);
         iv_light=(ImageView)findViewById(R.id.ivLight);
-        btn_connect_bt=(Button) findViewById(R.id.btn_connect_bt);
+       ll_connect_bt=(LinearLayout) findViewById(R.id.ll_connect_bt);
         switch_light=(SwitchCompat)findViewById(R.id.switch_light);
 
     }

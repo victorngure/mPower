@@ -25,19 +25,34 @@
 
             android:src="@drawable/ic_bulb_off" />
 
-        <Button
-            android:id="@+id/btn_connect_bt"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignStart="@+id/switch_light"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="25dp"
-            android:background="@drawable/circle"
-            android:drawableTop="@android:drawable/ic_popup_sync"
-            android:paddingTop="20dp"
-            android:text="reconnect"
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:orientation="vertical"
             android:layout_toEndOf="@+id/ivLight"
-            android:textColor="#fff" />
+            android:layout_marginLeft="50dp"
+            android:elevation="5dp"
+            android:id="@+id/ll_connect_bt"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:tint="#ffffff"
+                android:src="@drawable/ic_bluetooth"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RECONNECT"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                />
+
+        </LinearLayout>
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch_light"
