@@ -25,25 +25,19 @@
 
             android:src="@drawable/ic_bulb_off" />
 
-        <android.support.v7.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_connect_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-             android:layout_marginTop="25dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:textColor="#ffffff"
-            android:padding="15dp"
-
-            android:text="Connect to Bluetooth" />
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:max="10"
-            android:progress="3" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignStart="@+id/switch_light"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:background="@drawable/circle"
+            android:drawableTop="@android:drawable/ic_popup_sync"
+            android:paddingTop="20dp"
+            android:text="reconnect"
+            android:layout_toEndOf="@+id/ivLight"
+            android:textColor="#fff" />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch_light"
@@ -57,11 +51,6 @@
             android:text="Bulb Off   "
             android:textOff="OFF"
             android:textOn="ON" />
-
-
-
-
-
     </RelativeLayout>
 
     <View

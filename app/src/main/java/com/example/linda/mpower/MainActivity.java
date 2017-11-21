@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
     Double us;
     ImageView iv_light;
     SwitchCompat switch_light;
-    AppCompatButton btn_connect_bt;
+    Button btn_connect_bt;
 
 
 
@@ -233,12 +233,14 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         } catch (IOException e) {
             e.printStackTrace();
         }
-        View b = findViewById(R.id.open);
-        b.setVisibility(View.VISIBLE);
-        View c = findViewById(R.id.close);
+        View b = findViewById(R.id.btn_connect_bt);
+        b.setVisibility(View.GONE);
+        View c = findViewById(R.id.switch_light);
         c.setVisibility(View.VISIBLE);
-        View d = findViewById(R.id.connect);
-        d.setVisibility(View.GONE);
+
+
+//        View d = findViewById(R.id.connect);
+//        d.setVisibility(View.GONE);
         Powerlimit.setText("");
     }
 
@@ -272,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                     public void onClick(DialogInterface dialog, int which) {
                         usage = setLimit.getText().toString();
                         Toast.makeText(getApplicationContext(), "Usage set", Toast.LENGTH_SHORT).show();
-                        Powerlimit.setText(usage);
+                        Powerlimit.setText(usage + " Watts");
                         try {
                             checkData();
                         } catch (IOException e) {
@@ -298,6 +300,10 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                 timeSwapBuff += timeInMilliseconds;
                 customHandler.removeCallbacks(updateTimerThread);
                 closeBT();
+                View c = findViewById(R.id.btn_connect_bt);
+                c.setVisibility(View.VISIBLE);
+                iv_light.setImageDrawable(getResources().getDrawable(R.drawable.ic_bulb_off));
+                switch_light.setChecked(false);
             }
         }
     }
@@ -349,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
             Toast.makeText(this,"Device Found", Toast.LENGTH_SHORT).show();
         }
     }
+
+
     private void openBT() throws IOException {
         UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); //Standard SerialPortService ID
 
@@ -364,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         }
         catch (Exception e){
             //didnt find the device
-            Toast.makeText(this, "Didnt find bulb", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Could not find bluetooth device", Toast.LENGTH_SHORT).show();
 
 
         }
@@ -409,9 +417,6 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                                     {
                                         public void run()
                                         {
-
-
-
                                             sens.setText(data + " Joules");
                                             try{
                                                 dataDouble = Double.parseDouble(data);}
@@ -519,14 +524,16 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         mmSocket.close();
         Toast.makeText(this,"Bluetooth Closed" ,Toast.LENGTH_SHORT).show();
         switch_light.setText("Bulb Off  ");
-
-        sens.setText("");
-        View b = findViewById(R.id.open);
+        View b = findViewById(R.id.switch_light);
         b.setVisibility(View.GONE);
-        View c = findViewById(R.id.close);
-        c.setVisibility(View.GONE);
-        View d = findViewById(R.id.connect);
-        d.setVisibility(View.VISIBLE);
+        dataDouble=0.0;
+//        sens.setText("");
+//        View b = findViewById(R.id.open);
+//        b.setVisibility(View.GONE);
+//        View c = findViewById(R.id.close);
+//        c.setVisibility(View.GONE);
+//        View d = findViewById(R.id.connect);
+//        d.setVisibility(View.VISIBLE);
     }
 
     //chart stuff begins here
@@ -645,7 +652,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         Log.i("Nothing selected", "Nothing selected.");
     }
 
-   
+
     private void initViews(){
 
         sens = (TextView) findViewById(R.id.sensor_values);
@@ -656,11 +663,11 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         offButton = (Button) findViewById(R.id.close);
         totalEnergy = (TextView) findViewById(R.id.energy);
         iv_light=(ImageView)findViewById(R.id.ivLight);
-        btn_connect_bt=(AppCompatButton)findViewById(R.id.btn_connect_bt);
+        btn_connect_bt=(Button) findViewById(R.id.btn_connect_bt);
         switch_light=(SwitchCompat)findViewById(R.id.switch_light);
 
     }
-  
+
 
 }
 
