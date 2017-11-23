@@ -113,16 +113,11 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
 
 
     private LineChart mChart;
-    private SeekBar mSeekBarX;
-    private TextView tvX;
-    private Runnable mBaseAction;
 
-    private final String[] mLabels = {"Jan", "Fev", "Mar", "Apr", "Jun", "May", "Jul", "Aug", "Sep"};
-
-    private final float[][] mValues = {{3.5f, 4.7f, 4.3f, 8f, 6.5f, 9.9f, 7f, 8.3f, 7.0f},
-            {4.5f, 2.5f, 2.5f, 9f, 4.5f, 9.5f, 5f, 8.3f, 1.8f}};
 
     DatabaseReference databaseEnergy;
+
+    ArrayList<Float> energy_entries;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         mChart.setDrawGridBackground(false);
 
         // add data
-        setData();
+        //setData();
 
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
@@ -419,6 +414,14 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                                         public void run()
                                         {
                                             sens.setText(data + " Joules");
+
+
+                                            //add new data values to the array
+
+                                            energy_entries.add(Float.valueOf(data));
+                                            //update graph
+
+                                            setData(energy_entries);
                                             try{
                                                 dataDouble = Double.parseDouble(data);}
                                             catch (NumberFormatException ex)
@@ -550,21 +553,26 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         return xVals;
     }
 
-    private ArrayList<Entry> setYAxisValues(){
+    private ArrayList<Entry> setYAxisValues(ArrayList<Float> energy_reads){
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        yVals.add(new Entry(60, 0));
-        yVals.add(new Entry(48, 1));
-        yVals.add(new Entry(70.5f, 2));
-        yVals.add(new Entry(100, 3));
-        yVals.add(new Entry(180.9f, 4));
 
+        try {
+
+            for (int x = 1; x < energy_reads.size(); x++) {
+                yVals.add(new Entry(energy_reads.get(x), x));
+            }
+
+        }
+        catch (Exception float_array_is_null){};
         return yVals;
     }
 
-    private void setData() {
+    private void setData(ArrayList<Float> energy_reads) {
+
+
         ArrayList<String> xVals = setXAxisValues();
 
-        ArrayList<Entry> yVals = setYAxisValues();
+        ArrayList<Entry> yVals = setYAxisValues(energy_reads);
 
         LineDataSet set1;
 
