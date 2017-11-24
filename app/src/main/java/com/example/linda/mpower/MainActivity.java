@@ -63,6 +63,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Time;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -109,7 +110,10 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
     ImageView iv_light;
     SwitchCompat switch_light;
     LinearLayout ll_connect_bt;
+    int secs;
 
+    int current_graph_time;
+    LimitLine upper_limit;
 
 
     private LineChart mChart;
@@ -117,13 +121,17 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
 
     DatabaseReference databaseEnergy;
 
-    ArrayList<Float> energy_entries;
+    ArrayList<Double> energy_entries;
+    ArrayList<Integer> energyTime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
 
+        totalPower=0;
+energy_entries=new ArrayList<Double>();
+        energyTime=new ArrayList<Integer>();
 
         initViews();
 
@@ -155,11 +163,16 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         // mChart.setScaleXEnabled(true);
         // mChart.setScaleYEnabled(true);
 
-        LimitLine upper_limit = new LimitLine(130f, "Power Limit");
-        upper_limit.setLineWidth(4f);
-        upper_limit.enableDashedLine(10f, 10f, 0f);
-        upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        upper_limit.setTextSize(10f);
+
+        try {
+            upper_limit = new LimitLine(Float.valueOf(usage), "Power Limit");
+
+            upper_limit.setLineWidth(4f);
+            upper_limit.enableDashedLine(10f, 10f, 0f);
+            upper_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+            upper_limit.setTextSize(10f);
+
+
 
        /* LimitLine lower_limit = new LimitLine(-30f, "Lower Limit");
         lower_limit.setLineWidth(4f);
@@ -167,18 +180,45 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         lower_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
         lower_limit.setTextSize(10f);*/
 
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        leftAxis.addLimitLine(upper_limit);
-        //leftAxis.addLimitLine(lower_limit);
-        leftAxis.setAxisMaxValue(220f);
-        leftAxis.setAxisMinValue(0f);
-        //leftAxis.setYOffset(20f);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
-        leftAxis.setDrawZeroLine(false);
+            YAxis leftAxis = mChart.getAxisLeft();
+            leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
+            leftAxis.addLimitLine(upper_limit);
+            //leftAxis.addLimitLine(lower_limit);
+            leftAxis.setAxisMaxValue(220f);
+            leftAxis.setAxisMinValue(0f);
+            //leftAxis.setYOffset(20f);
+            leftAxis.enableGridDashedLine(10f, 10f, 0f);
+            leftAxis.setDrawZeroLine(false);
 
-        // limit lines are drawn behind data (and not on top)
-        leftAxis.setDrawLimitLinesBehindData(true);
+            // limit lines are drawn behind data (and not on top)
+            leftAxis.setDrawLimitLinesBehindData(true);
+
+        }
+        catch (Exception f){
+            //limit not set
+
+
+
+       /* LimitLine lower_limit = new LimitLine(-30f, "Lower Limit");
+        lower_limit.setLineWidth(4f);
+        lower_limit.enableDashedLine(10f, 10f, 0f);
+        lower_limit.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        lower_limit.setTextSize(10f);*/
+
+            YAxis leftAxis = mChart.getAxisLeft();
+            leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
+            //leftAxis.addLimitLine(upper_limit);
+            //leftAxis.addLimitLine(lower_limit);
+            leftAxis.setAxisMaxValue(220f);
+            leftAxis.setAxisMinValue(0f);
+            //leftAxis.setYOffset(20f);
+            leftAxis.enableGridDashedLine(10f, 10f, 0f);
+            leftAxis.setDrawZeroLine(false);
+
+            // limit lines are drawn behind data (and not on top)
+            leftAxis.setDrawLimitLinesBehindData(true);
+
+        }
 
         mChart.getAxisRight().setEnabled(false);
 
@@ -271,6 +311,9 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                         usage = setLimit.getText().toString();
                         Toast.makeText(getApplicationContext(), "Usage set", Toast.LENGTH_SHORT).show();
                         Powerlimit.setText(usage + " Watts");
+                       // addData();
+                        setData(energy_entries);
+
                         try {
                             checkData();
                         } catch (IOException e) {
@@ -416,12 +459,6 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
                                             sens.setText(data + " Joules");
 
 
-                                            //add new data values to the array
-
-                                            energy_entries.add(Float.valueOf(data));
-                                            //update graph
-
-                                            setData(energy_entries);
                                             try{
                                                 dataDouble = Double.parseDouble(data);}
                                             catch (NumberFormatException ex)
@@ -458,6 +495,19 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         df.format(totalPower);
         stringEnergy = String.valueOf(totalPower);
         totalEnergy.setText(stringEnergy + " Watts");
+
+
+
+        //add new data values to the array
+
+        energy_entries.add(totalPower);
+        energyTime.add(secs);
+
+        //add new
+        //update graph
+
+        setData(energy_entries);
+
 
         //get current time
 
@@ -510,9 +560,10 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
-            int secs = (int) (updatedTime / 1000);
+            secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
             secs = secs % 60;
+            energyTime.add(secs);
             int milliseconds = (int) (updatedTime % 1000);
             timer.setText("" + mins + ":"
                     + String.format("%02d", secs) + ":"
@@ -542,24 +593,39 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
 
     //chart stuff begins here
 
-    private ArrayList<String> setXAxisValues(){
+    private ArrayList<String> setXAxisValues(ArrayList<Integer>  energyTime){
         ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("10");
-        xVals.add("20");
+      /*  xVals.add("10");
+      *//*  xVals.add("20");
         xVals.add("30");
         xVals.add("30.5");
-        xVals.add("40");
+        xVals.add("40");*/
+
+
+        try {
+
+
+            for (int x = 1; x < energyTime.size(); x++) {
+                xVals.add(String.valueOf(energyTime.get(x)));
+
+                current_graph_time=energyTime.get(x);
+
+           }
+
+        }
+        catch (Exception float_array_is_null){};
 
         return xVals;
     }
 
-    private ArrayList<Entry> setYAxisValues(ArrayList<Float> energy_reads){
+    private ArrayList<Entry> setYAxisValues(ArrayList<Double> energy_reads){
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
         try {
-
+int v=0;
             for (int x = 1; x < energy_reads.size(); x++) {
-                yVals.add(new Entry(energy_reads.get(x), x));
+                v++;
+                yVals.add(new Entry(energy_reads.get(x).floatValue(), v*60));
             }
 
         }
@@ -567,10 +633,10 @@ public class MainActivity extends AppCompatActivity implements OnChartGestureLis
         return yVals;
     }
 
-    private void setData(ArrayList<Float> energy_reads) {
+    private void setData(ArrayList<Double> energy_reads) {
 
 
-        ArrayList<String> xVals = setXAxisValues();
+        ArrayList<String> xVals = setXAxisValues(energyTime);
 
         ArrayList<Entry> yVals = setYAxisValues(energy_reads);
 
