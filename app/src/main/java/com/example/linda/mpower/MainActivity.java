@@ -311,7 +311,7 @@ energy_entries=new ArrayList<Double>();
                         usage = setLimit.getText().toString();
                         Toast.makeText(getApplicationContext(), "Usage set", Toast.LENGTH_SHORT).show();
                         Powerlimit.setText(usage + " Watts");
-                       // addData();
+                       // addDataa();
                         setData(energy_entries);
 
                         try {
