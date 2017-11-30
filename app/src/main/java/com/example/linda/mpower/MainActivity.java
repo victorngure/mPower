@@ -625,7 +625,7 @@ energy_entries=new ArrayList<Double>();
 int v=0;
             for (int x = 1; x < energy_reads.size(); x++) {
                 v++;
-                yVals.add(new Entry(energy_reads.get(x).floatValue(), v*60));
+                yVals.add(new Entry(energy_reads.get(x).floatValue(), (v-1)*60));
             }
 
         }
